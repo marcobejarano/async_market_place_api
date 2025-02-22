@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:17.4-alpine3.21
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: market_place_api_user
+      POSTGRES_PASSWORD: Postgres123
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - postgres_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U market_place_api_user" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+networks:
+  postgres_network:
+    driver: bridge
+    name: postgres_network
