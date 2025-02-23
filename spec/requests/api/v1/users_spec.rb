@@ -73,4 +73,14 @@ RSpec.describe "Api::V1::Users", type: :request do
       end
     end
   end
+
+  describe "DELETE /api/v1/users/:id" do
+    it "destroys the user and returns no content" do
+      expect {
+        delete api_v1_user_url(user), as: :json
+      }.to change(User, :count).by(-1)
+
+      expect(response).to have_http_status(:no_content)
+    end
+  end
 end
