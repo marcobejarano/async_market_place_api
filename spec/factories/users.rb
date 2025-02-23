@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :user do
-    email { "test@example.com" }
-    password_digest { "hashed_password" }
+    email { Faker::Internet.email }
+    password { 'password123' }
+    password_digest { BCrypt::Password.create(password) }
   end
 end
