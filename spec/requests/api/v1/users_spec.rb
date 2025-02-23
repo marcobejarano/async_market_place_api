@@ -45,4 +45,32 @@ RSpec.describe "Api::V1::Users", type: :request do
       end
     end
   end
+
+  describe "PATCH /api/v1/users/:id" do
+    context "with valid parameters" do
+      it "updates the user and returns success" do
+        patch api_v1_user_url(user), params: {
+          user: {
+            email: user.email,
+            password: "123456"
+          }
+        }, as: :json
+
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context "with invalid parameters" do
+      it "does not update the user and returns unprocessable entity" do
+        patch api_v1_user_url(user), params: {
+          user: {
+            email: "bad_email",
+            password: "123456"
+          }
+        }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
