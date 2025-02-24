@@ -9,8 +9,8 @@ gem "pg", "~> 1.5", ">= 1.5.9"
 # A fast, asynchronous, rack-compatible web server.
 gem "falcon", "~> 0.50.0"
 
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
+# Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
+gem "jsonapi-serializer", "~> 2.2"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1", ">= 3.1.20"

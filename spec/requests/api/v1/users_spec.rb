@@ -12,7 +12,7 @@ RSpec.describe "Api::V1::Users", type: :request do
       expect(response).to have_http_status(:success)
 
       json_response = JSON.parse(response.body)
-      expect(json_response["email"]).to eq(user.email)
+      expect(json_response["data"]["attributes"]["email"]).to eq(user.email)
     end
   end
 

@@ -166,6 +166,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.10.1)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     jwt (2.10.1)
       base64
     kamal (2.5.2)
@@ -335,7 +337,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rails (2.30.1)
+    rubocop-rails (2.30.2)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
@@ -414,6 +416,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.4, >= 6.4.4)
   faker (~> 3.5, >= 3.5.1)
   falcon (~> 0.50.0)
+  jsonapi-serializer (~> 2.2)
   jwt (~> 2.10, >= 2.10.1)
   kamal
   pg (~> 1.5, >= 1.5.9)
