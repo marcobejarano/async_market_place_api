@@ -19,4 +19,11 @@ RSpec.describe User, type: :model do
     subject.email = "duplicate@test.org"
     expect(subject).not_to be_valid
   end
+
+  it "destroys associated products when user is deleted" do
+    user = create(:user)
+    create(:product, user: user)
+
+    expect { user.destroy }.to change(Product, :count).by(-1)
+  end
 end
