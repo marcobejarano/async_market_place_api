@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Users", type: :request do
   let!(:user) { create(:user) }
+  let!(:product) { create(:product, user: user) }
   let(:auth_token) { JsonWebToken.encode(user_id: user.id) }
   let(:headers) { { "Authorization" => auth_token } }
 
@@ -11,8 +12,11 @@ RSpec.describe "Api::V1::Users", type: :request do
 
       expect(response).to have_http_status(:success)
 
-      json_response = JSON.parse(response.body)
-      expect(json_response["data"]["attributes"]["email"]).to eq(user.email)
+      json_response = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json_response.dig(:data, :attributes, :email)).to eq(user.email)
+      expect(json_response.dig(:data, :relationships, :products, :data, 0, :id)).to eq(user.products.first.id.to_s)
+      expect(json_response.dig(:included, 0, :attributes, :title)).to eq(user.products.first.title)
     end
   end
 
