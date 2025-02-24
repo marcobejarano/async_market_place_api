@@ -50,17 +50,17 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-end
-
-group :test do
-  # rspec-rails integrates the Rails testing helpers into RSpec.
-  gem "rspec-rails", "~> 7.1", ">= 7.1.1"
 
   # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
   gem "faker", "~> 3.5", ">= 3.5.1"
 
   # factory_bot_rails provides integration between factory_bot and rails 5.0 or newer
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
+end
+
+group :test do
+  # rspec-rails integrates the Rails testing helpers into RSpec.
+  gem "rspec-rails", "~> 7.1", ">= 7.1.1"
 
   # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality that, if written by hand, would be much longer, more complex, and error-prone.
   gem "shoulda-matchers", "~> 6.4"
