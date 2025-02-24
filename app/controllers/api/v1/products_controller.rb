@@ -11,7 +11,8 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /products/1
   def show
-    render json: ProductSerializer.new(@product).serializable_hash.to_json
+    options = { include: [ :user ] }
+    render json: ProductSerializer.new(@product, options).serializable_hash.to_json
   end
 
   # POST /products

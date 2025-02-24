@@ -21,10 +21,14 @@ RSpec.describe "Api::V1::Products", type: :request do
   describe "GET /api/v1/products/:id" do
     it "returns the product" do
       get api_v1_product_url(product), as: :json
+
       expect(response).to have_http_status(:success)
 
-      json_response = JSON.parse(response.body)
-      expect(json_response["data"]["attributes"]["title"]).to eq(product.title)
+      json_response = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json_response.dig(:data, :attributes, :title)).to eq(product.title)
+      expect(json_response.dig(:data, :relationships, :user, :data, :id)).to eq(product.user.id.to_s)
+      expect(json_response.dig(:included, 0, :attributes, :email)).to eq(product.user.email)
     end
   end
 
