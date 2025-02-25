@@ -38,4 +38,25 @@ RSpec.describe Product, type: :model do
       expect(Product.recent).to eq([ other_product, another_tv, tv ])
     end
   end
+
+  describe ".search" do
+    it 'find "laptop" with min price of 400' do
+      search_hash = { keyword: "laptop", min_price: 400 }
+      expect(Product.search(search_hash)).to eq([ other_product ])
+    end
+
+    it "find cheap TV within price range" do
+      search_hash = { keyword: "tv", min_price: 50, max_price: 150 }
+      expect(Product.search(search_hash)).to eq([ tv ])
+    end
+
+    it "returns all products when no parameters are specified" do
+      expect(Product.search({})).to match_array(Product.all)
+    end
+
+    it "filters by product IDs" do
+      search_hash = { product_ids: [ other_product.id ] }
+      expect(Product.search(search_hash)).to eq([ other_product ])
+    end
+  end
 end

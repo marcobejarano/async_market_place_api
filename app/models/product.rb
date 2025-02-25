@@ -18,4 +18,18 @@ class Product < ApplicationRecord
   }
 
   scope :recent, -> { order(created_at: :desc) }
+
+  scope :by_product_ids, ->(ids) {
+    where(id: ids) if ids.present?
+  }
+
+  def self.search(params = {})
+    products = Product.all
+    products = products.filter_by_title(params[:keyword]) if params[:keyword].present?
+    products = products.above_or_equal_to_price(params[:min_price]) if params[:min_price].present?
+    products = products.below_or_equal_to_price(params[:max_price]) if params[:max_price].present?
+    products = products.by_product_ids(params[:product_ids]) if params[:product_ids].is_a?(Array) && params[:product_ids].present?
+
+    products.recent
+  end
 end
