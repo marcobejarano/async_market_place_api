@@ -3,7 +3,7 @@ class Product < ApplicationRecord
 
   validates :title, :user_id, presence: true
   validates :price, presence: true,
-                    numericality: { greater_than_or_equal: 0 }
+                    numericality: { greater_than_or_equal_to: 0 }
 
   scope :filter_by_title, ->(query) {
     where("title ILIKE ?", "%#{query}%").order(title: :asc)
