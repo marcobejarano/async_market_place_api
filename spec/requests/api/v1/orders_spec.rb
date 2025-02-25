@@ -2,10 +2,19 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Orders", type: :request do
   let!(:user) { create(:user) }
-  let!(:product) { create(:product) }
-  let!(:order) { create(:order, user: user, products: [ product ]) }
+  let!(:product_one) { create(:product) }
+  let!(:product_two) { create(:product) }
+  let!(:order) { create(:order, user: user, products: [ product_one, product_two ]) }
   let(:auth_token) { JsonWebToken.encode(user_id: user.id) }
   let(:headers) { { "Authorization" => auth_token } }
+  let(:order_params) do
+    {
+      order: {
+        product_ids: [ product_one.id, product_two.id ],
+        total: 50
+      }
+    }
+  end
 
   describe "GET /api/v1/orders" do
     context "when user is not logged in" do
@@ -46,6 +55,33 @@ RSpec.describe "Api::V1::Orders", type: :request do
         json_response = JSON.parse(response.body, symbolize_names: true)
         include_product_attr = json_response.dig(:included, 0, :attributes)
         expect(include_product_attr[:title]).to eq(order.products.first.title)
+      end
+    end
+  end
+
+  describe "POST /api/v1/orders" do
+    context "when user is not logged in" do
+      it "forbids creating an order" do
+        expect {
+          post api_v1_orders_url,
+            params: order_params,
+            as: :json
+        }.not_to change(Order, :count)
+
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context "when user is logged in" do
+      it "creates an order with two products" do
+        expect {
+          post api_v1_orders_url,
+          headers: headers,
+          params: order_params,
+          as: :json
+        }.to change(Order, :count).by(1)
+
+        expect(response).to have_http_status(:created)
       end
     end
   end
