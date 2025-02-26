@@ -24,6 +24,7 @@ class Api::V1::OrdersController < ApplicationController
     order = current_user.orders.build(order_params)
 
     if order.save
+      OrderConfirmationWorker.perform_async(order.id)
       render json: order, status: :created
     else
       render json: { errors: order.errors },

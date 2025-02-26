@@ -31,5 +31,6 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Ignore Postgres data
+# Ignore Postgres and Redist data
 /postgres_data/
+/redis_data/
