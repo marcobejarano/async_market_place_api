@@ -1,12 +1,13 @@
 class Api::V1::ProductsController < ApplicationController
+  include Paginable
   before_action :set_product, only: %i[show update destroy]
   before_action :check_login, only: [ :create ]
   before_action :check_owner, only: %i[update destroy]
 
   # GET /products
   def index
-    @products = Product.page(params[:page])
-                       .per(params[:per_page])
+    @products = Product.page(current_page)
+                       .per(per_page)
                        .search(params)
 
     options = {
