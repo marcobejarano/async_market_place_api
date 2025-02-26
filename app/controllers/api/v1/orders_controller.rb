@@ -39,7 +39,7 @@ class Api::V1::OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      product_ids_and_quantities: [:product_id, :quantity]
+      product_ids_and_quantities: [ :product_id, :quantity ]
     )
   end
 end
