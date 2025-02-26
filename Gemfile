@@ -21,6 +21,9 @@ gem "jwt", "~> 2.10", ">= 2.10.1"
 # Simple, efficient background processing for Ruby.
 gem "sidekiq", "8.0.0.beta1"
 
+# Kaminari is a Scope & Engine based, clean, powerful, agnostic, customizable and sophisticated paginator for Rails 4+
+gem "kaminari", "~> 1.2", ">= 1.2.2"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
