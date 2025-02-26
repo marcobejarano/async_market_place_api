@@ -7,13 +7,15 @@ RSpec.describe Order, type: :model do
   let(:order) { build(:order, user: user) }
 
   describe "total calculation" do
-    it "sets the total price based on products" do
-      new_order = Order.new(user: user)
-      new_order.products << product_one
-      new_order.products << product_two
-      new_order.save
+    it "calculates and sets the total based on placements" do
+      order.placements = [
+        Placement.new(product: product_one, quantity: 3),
+        Placement.new(product: product_two, quantity: 2)
+      ]
 
-      expect(new_order.total).to eq(product_one.price + product_two.price)
+      order.set_total
+      expected_total = (product_one.price * 3) + (product_two.price * 2)
+      expect(order.total).to eq(expected_total)
     end
   end
 
