@@ -10,8 +10,10 @@ RSpec.describe "Api::V1::Orders", type: :request do
   let(:order_params) do
     {
       order: {
-        product_ids: [ product_one.id, product_two.id ],
-        total: 50
+        product_ids_and_quantities: [
+          { product_id: product_one.id, quantity: 2 },
+          { product_id: product_two.id, quantity: 3 }
+        ]
       }
     }
   end
