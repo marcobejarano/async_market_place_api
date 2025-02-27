@@ -2,10 +2,18 @@ class Api::V1::OrdersController < ApplicationController
   include Paginable
   before_action :check_login, only: %i[index show create]
 
+  # GET /orders
   def index
-    @orders = current_user.orders
-                          .page(current_page)
-                          .per(per_page)
+    cache_key = "user_#{current_user.id}_orders_page_#{current_page}_per_#{per_page}"
+
+    orders_scope = current_user.orders
+    cached_orders = Rails.cache.fetch(cache_key, expires_in: 10.minutes) do
+      orders_scope.to_a
+    end
+
+    @orders = Kaminari.paginate_array(cached_orders)
+                      .page(current_page)
+                      .per(per_page)
 
     options = get_links_serializer_options(
       "api_v1_orders_path", @orders
@@ -16,6 +24,7 @@ class Api::V1::OrdersController < ApplicationController
     ).serializable_hash
   end
 
+  # GET /orders/:id
   def show
     order = current_user.orders.find(params[:id])
 
@@ -29,6 +38,7 @@ class Api::V1::OrdersController < ApplicationController
     end
   end
 
+  # POST /orders
   def create
     order = Order.create!(user: current_user)
     order.build_placements_with_product_ids_and_quantities(

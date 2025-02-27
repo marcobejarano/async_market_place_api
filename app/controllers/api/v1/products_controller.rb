@@ -6,9 +6,16 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.page(current_page)
-                       .per(per_page)
-                       .search(params)
+    cache_key = "products_page_#{current_page}_per_#{per_page}_search_#{params.to_json}"
+
+    products_scope = Product.search(params)
+    cached_products = Rails.cache.fetch(cache_key, expires_in: 10.minutes) do
+      products_scope.to_a
+    end
+
+    @products = Kaminari.paginate_array(cached_products)
+                        .page(current_page)
+                        .per(per_page)
 
     options = get_links_serializer_options(
       "api_v1_products_path", @products
@@ -17,7 +24,7 @@ class Api::V1::ProductsController < ApplicationController
     render json: ProductSerializer.new(@products, options).serializable_hash
   end
 
-  # GET /products/1
+  # GET /products/:id
   def show
     options = { include: [ :user ] }
     render json: ProductSerializer.new(@product, options).serializable_hash
@@ -35,7 +42,7 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
 
-  # PATCH /products/1
+  # PATCH /products/:id
   def update
     if @product.update(product_params)
       render json: ProductSerializer.new(@product).serializable_hash,
@@ -46,7 +53,7 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
+  # DELETE /products/:id
   def destroy
     @product.destroy
     head :no_content
@@ -56,7 +63,7 @@ class Api::V1::ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
-    head :not_found unless @product
+    render json: { error: "Product not found" }, status: :not_found unless @product
   end
 
   def product_params

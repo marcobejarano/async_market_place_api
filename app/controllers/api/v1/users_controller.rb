@@ -2,10 +2,16 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
   before_action :check_owner, only: %i[update destroy]
 
-  # GET /users/1
+  # GET /users/:id
   def show
-    options = { include: [ :products ] }
-    render json: UserSerializer.new(@user, options).serializable_hash.to_json
+    cache_key = "user_#{@user.id}_with_products"
+
+    cached_user = Rails.cache.fetch(cache_key, expires_in: 15.minutes) do
+      options = { include: [ :products ] }
+      UserSerializer.new(@user, options).serializable_hash
+    end
+
+    render json: cached_user
   end
 
   # POST /users
@@ -13,22 +19,22 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: UserSerializer.new(@user).serializable_hash.to_json, status: :created
+      render json: UserSerializer.new(@user).serializable_hash, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH /users/1
+  # PATCH /users/:id
   def update
     if @user.update(user_params)
-      render json: UserSerializer.new(@user).serializable_hash.to_json, status: :ok
+      render json: UserSerializer.new(@user).serializable_hash, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /users/1
+  # DELETE /users/:id
   def destroy
     @user.destroy
     head :no_content
@@ -38,6 +44,7 @@ class Api::V1::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+    render json: { error: "User not found" }, status: :not_found unless @user
   end
 
   def check_owner

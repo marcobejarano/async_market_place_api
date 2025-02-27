@@ -308,6 +308,8 @@ GEM
     rake (13.2.1)
     rdoc (6.12.0)
       psych (>= 4.0.0)
+    redis (5.4.0)
+      redis-client (>= 0.22.0)
     redis-client (0.23.2)
       connection_pool
     regexp_parser (2.10.0)
@@ -438,6 +440,7 @@ DEPENDENCIES
   kaminari (~> 1.2, >= 1.2.2)
   pg (~> 1.5, >= 1.5.9)
   rails (~> 8.0.1)
+  redis (~> 5.4)
   rspec-rails (~> 7.1, >= 7.1.1)
   rubocop-rails-omakase
   shoulda-matchers (~> 6.4)

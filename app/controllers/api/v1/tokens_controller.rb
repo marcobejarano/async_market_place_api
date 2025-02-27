@@ -1,4 +1,5 @@
 class Api::V1::TokensController < ApplicationController
+  # POST /tokens
   def create
     @user = User.find_by_email(user_params[:email])
 

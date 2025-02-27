@@ -24,6 +24,9 @@ gem "sidekiq", "8.0.0.beta1"
 # Kaminari is a Scope & Engine based, clean, powerful, agnostic, customizable and sophisticated paginator for Rails 4+
 gem "kaminari", "~> 1.2", ">= 1.2.2"
 
+# A Ruby client that tries to match Redis' API one-to-one, while still providing an idiomatic interface.
+gem "redis", "~> 5.4"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
