@@ -8,9 +8,9 @@ class Api::V1::ProductsController < ApplicationController
   def index
     cache_key = "products_page_#{current_page}_per_#{per_page}_search_#{params.to_json}"
 
-    products_scope = Product.search(params)
+    products_scope = Product.includes(:user).search(params)
     cached_products = Rails.cache.fetch(cache_key, expires_in: 10.minutes) do
-      products_scope.to_a
+      products_scope.all
     end
 
     @products = Kaminari.paginate_array(cached_products)
@@ -20,14 +20,17 @@ class Api::V1::ProductsController < ApplicationController
     options = get_links_serializer_options(
       "api_v1_products_path", @products
     )
+    options[:include] = [ :user ]
 
-    render json: ProductSerializer.new(@products, options).serializable_hash
+    render json: ProductSerializer.new(@products, options).serializable_hash,
+           status: :ok
   end
 
   # GET /products/:id
   def show
     options = { include: [ :user ] }
-    render json: ProductSerializer.new(@product, options).serializable_hash
+    render json: ProductSerializer.new(@product, options).serializable_hash,
+           status: :ok
   end
 
   # POST /products
@@ -35,10 +38,10 @@ class Api::V1::ProductsController < ApplicationController
     product = current_user.products.build(product_params)
     if product.save
       render json: ProductSerializer.new(product).serializable_hash,
-        status: :created
+             status: :created
     else
       render json: { errors: product.errors },
-        status: :unprocessable_entity
+             status: :unprocessable_entity
     end
   end
 
@@ -49,7 +52,7 @@ class Api::V1::ProductsController < ApplicationController
         status: :ok
     else
       render json: { errors: @product.errors },
-        status: :unprocessable_entity
+             status: :unprocessable_entity
     end
   end
 
@@ -63,7 +66,8 @@ class Api::V1::ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
-    render json: { error: "Product not found" }, status: :not_found unless @product
+    render json: { error: "Product not found" },
+           status: :not_found unless @product
   end
 
   def product_params

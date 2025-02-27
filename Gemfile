@@ -65,6 +65,9 @@ group :development, :test do
 
   # factory_bot_rails provides integration between factory_bot and rails 5.0 or newer
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
+
+  # Help to kill N+1 queries and unused eager loading.
+  gem "bullet", "~> 8.0", ">= 8.0.1"
 end
 
 group :test do

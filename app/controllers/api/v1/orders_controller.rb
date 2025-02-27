@@ -19,9 +19,8 @@ class Api::V1::OrdersController < ApplicationController
       "api_v1_orders_path", @orders
     )
 
-    render json: OrderSerializer.new(
-      @orders, options
-    ).serializable_hash
+    render json: OrderSerializer.new(@orders, options).serializable_hash,
+           status: :ok
   end
 
   # GET /orders/:id
@@ -30,9 +29,8 @@ class Api::V1::OrdersController < ApplicationController
 
     if order
       options = { include: [ :products ] }
-      render json: OrderSerializer.new(
-        order, options
-      ).serializable_hash
+      render json: OrderSerializer.new(order, options).serializable_hash,
+             status: ok
     else
       head :not_found
     end
@@ -47,10 +45,11 @@ class Api::V1::OrdersController < ApplicationController
 
     if order.save
       OrderConfirmationWorker.perform_async(order.id)
-      render json: order, status: :created
+      render json: order,
+             status: :created
     else
       render json: { errors: order.errors },
-        status: :unprocessable_entity
+             status: :unprocessable_entity
     end
   end
 

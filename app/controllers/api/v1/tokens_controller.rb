@@ -7,7 +7,7 @@ class Api::V1::TokensController < ApplicationController
       render json: {
         token: JsonWebToken.encode(user_id: @user.id),
         email: @user.email
-      }
+      }, status: :created
     else
       head :unauthorized
     end
