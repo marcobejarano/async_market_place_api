@@ -33,8 +33,9 @@ RSpec.describe "Api::V1::Orders", type: :request do
           as: :json
 
         expect(response).to have_http_status(:success)
-        json_response = JSON.parse(response.body)
-        expect(json_response["data"].size).to eq(user.orders.count)
+        json_response = JSON.parse(response.body, symbolize_names: true)
+        expect(json_response[:data].size).to eq(user.orders.count)
+        expect_json_response_to_be_paginated(json_response)
       end
     end
   end

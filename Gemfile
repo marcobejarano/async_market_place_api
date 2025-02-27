@@ -21,6 +21,12 @@ gem "jwt", "~> 2.10", ">= 2.10.1"
 # Simple, efficient background processing for Ruby.
 gem "sidekiq", "8.0.0.beta1"
 
+# Kaminari is a Scope & Engine based, clean, powerful, agnostic, customizable and sophisticated paginator for Rails 4+
+gem "kaminari", "~> 1.2", ">= 1.2.2"
+
+# A Ruby client that tries to match Redis' API one-to-one, while still providing an idiomatic interface.
+gem "redis", "~> 5.4"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
@@ -42,7 +48,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
+gem "rack-cors", "~> 2.0", ">= 2.0.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -59,6 +65,9 @@ group :development, :test do
 
   # factory_bot_rails provides integration between factory_bot and rails 5.0 or newer
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
+
+  # Help to kill N+1 queries and unused eager loading.
+  gem "bullet", "~> 8.0", ">= 8.0.1"
 end
 
 group :test do

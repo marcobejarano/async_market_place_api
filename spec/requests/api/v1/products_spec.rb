@@ -12,9 +12,13 @@ RSpec.describe "Api::V1::Products", type: :request do
   let(:other_headers) { { "Authorization" => other_auth_token } }
 
   describe "GET /api/v1/products" do
-    it "returns all products" do
+    it "returns a successful response with pagination links" do
       get api_v1_products_url, as: :json
+
       expect(response).to have_http_status(:success)
+
+      json_response = JSON.parse(response.body, symbolize_names: true)
+      expect_json_response_to_be_paginated(json_response)
     end
   end
 
