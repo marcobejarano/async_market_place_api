@@ -371,7 +371,7 @@ GEM
     securerandom (0.4.1)
     shoulda-matchers (6.4.0)
       activesupport (>= 5.2.0)
-    sidekiq (8.0.0.beta1)
+    sidekiq (8.0.0.beta2)
       base64
       connection_pool (>= 2.5.0)
       json (>= 2.9.0)
@@ -452,7 +452,7 @@ DEPENDENCIES
   rspec-rails (~> 7.1, >= 7.1.1)
   rubocop-rails-omakase
   shoulda-matchers (~> 6.4)
-  sidekiq (= 8.0.0.beta1)
+  sidekiq (= 8.0.0.beta2)
   solid_cable
   solid_cache
   solid_queue
