@@ -30,7 +30,7 @@ class Api::V1::OrdersController < ApplicationController
     if order
       options = { include: [ :products ] }
       render json: OrderSerializer.new(order, options).serializable_hash,
-             status: ok
+             status: :ok
     else
       head :not_found
     end

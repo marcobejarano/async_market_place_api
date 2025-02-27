@@ -11,7 +11,8 @@ class Api::V1::UsersController < ApplicationController
       UserSerializer.new(@user, options).serializable_hash
     end
 
-    render json: cached_user
+    render json: cached_user,
+           status: :ok
   end
 
   # POST /users
@@ -33,7 +34,8 @@ class Api::V1::UsersController < ApplicationController
       render json: UserSerializer.new(@user).serializable_hash,
              status: :ok
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors,
+             status: :unprocessable_entity
     end
   end
 
@@ -47,7 +49,8 @@ class Api::V1::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
-    render json: { error: "User not found" }, status: :not_found unless @user
+    render json: { error: "User not found" },
+           status: :not_found unless @user
   end
 
   def check_owner
