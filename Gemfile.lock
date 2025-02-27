@@ -173,7 +173,7 @@ GEM
       activesupport (>= 4.2)
     jwt (2.10.1)
       base64
-    kamal (2.5.2)
+    kamal (2.5.3)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -414,7 +414,7 @@ GEM
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
     uniform_notifier (1.16.0)
-    uri (1.0.2)
+    uri (1.0.3)
     useragent (0.16.11)
     websocket-driver (0.7.7)
       base64
