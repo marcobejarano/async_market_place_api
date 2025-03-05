@@ -79,8 +79,13 @@ GEM
       io-event (~> 1.9)
       metrics (~> 0.12)
       traces (~> 0.15)
-    async-container (0.22.0)
+    async-container (0.23.2)
       async (~> 2.22)
+    async-container-supervisor (0.5.1)
+      async-container (~> 0.22)
+      async-service
+      io-endpoint
+      memory-leak (~> 0.5)
     async-http (0.87.0)
       async (>= 2.10.2)
       async-pool (~> 0.9)
@@ -91,7 +96,7 @@ GEM
       protocol-http1 (~> 0.30)
       protocol-http2 (~> 0.22)
       traces (~> 0.10)
-    async-http-cache (0.4.4)
+    async-http-cache (0.4.5)
       async-http (~> 0.56)
     async-pool (0.10.3)
       async (>= 1.25)
@@ -136,16 +141,16 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
-    falcon (0.50.0)
+    falcon (0.51.0)
       async
       async-container (~> 0.20)
+      async-container-supervisor (~> 0.5.0)
       async-http (~> 0.75)
       async-http-cache (~> 0.4)
       async-service (~> 0.10)
       bundler
       localhost (~> 1.1)
       openssl (~> 3.0)
-      process-metrics (~> 0.2)
       protocol-http (~> 0.31)
       protocol-rack (~> 0.7)
       samovar (~> 2.3)
@@ -210,6 +215,7 @@ GEM
       net-smtp
     mapping (1.1.1)
     marcel (1.0.4)
+    memory-leak (0.5.2)
     metrics (0.12.1)
     mini_mime (1.1.5)
     minitest (5.25.4)
@@ -251,10 +257,6 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
-    process-metrics (0.5.1)
-      console (~> 1.8)
-      json (~> 2)
-      samovar (~> 2.1)
     protocol-hpack (1.5.1)
     protocol-http (0.49.0)
     protocol-http1 (0.30.0)
@@ -262,7 +264,7 @@ GEM
     protocol-http2 (0.22.1)
       protocol-hpack (~> 1.4)
       protocol-http (~> 0.47)
-    protocol-rack (0.11.1)
+    protocol-rack (0.11.2)
       protocol-http (~> 0.43)
       rack (>= 1.0)
     psych (5.2.3)
@@ -270,7 +272,7 @@ GEM
       stringio
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.10)
+    rack (3.1.11)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
     rack-session (2.1.0)
@@ -440,7 +442,7 @@ DEPENDENCIES
   debug
   factory_bot_rails (~> 6.4, >= 6.4.4)
   faker (~> 3.5, >= 3.5.1)
-  falcon (~> 0.50.0)
+  falcon (~> 0.51.0)
   jsonapi-serializer (~> 2.2)
   jwt (~> 2.10, >= 2.10.1)
   kamal

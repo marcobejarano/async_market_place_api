@@ -7,7 +7,7 @@ gem "rails", "~> 8.0.1"
 gem "pg", "~> 1.5", ">= 1.5.9"
 
 # A fast, asynchronous, rack-compatible web server.
-gem "falcon", "~> 0.50.0"
+gem "falcon", "~> 0.51.0"
 
 # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
 gem "jsonapi-serializer", "~> 2.2"
