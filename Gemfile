@@ -67,7 +67,7 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
 
   # Help to kill N+1 queries and unused eager loading.
-  gem "bullet", "~> 8.0", ">= 8.0.1"
+  gem "bullet", "~> 8.0"
 end
 
 group :test do
