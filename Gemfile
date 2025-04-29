@@ -75,5 +75,5 @@ group :test do
   gem "rspec-rails", "~> 7.1", ">= 7.1.1"
 
   # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality that, if written by hand, would be much longer, more complex, and error-prone.
-  gem "shoulda-matchers", "~> 6.4"
+  gem "shoulda-matchers", "~> 6.5"
 end
