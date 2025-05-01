@@ -72,7 +72,7 @@ end
 
 group :test do
   # rspec-rails integrates the Rails testing helpers into RSpec.
-  gem "rspec-rails", "~> 7.1", ">= 7.1.1"
+  gem "rspec-rails", "~> 8.0"
 
   # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality that, if written by hand, would be much longer, more complex, and error-prone.
   gem "shoulda-matchers", "~> 6.4"
